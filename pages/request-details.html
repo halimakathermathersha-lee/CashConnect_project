@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashConnect | Request Details</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+     <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="flex justify-between items-center px-5 py-3">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img src="../assets/logo.png" width="50px">
+                <div>
+                    <p class="text-green-700 text-2xl font-bold">
+                        Cash<span class="text-black">Connect</span>
+                    </p>
+                    <p class="text-xs">Connecting People, Building Trust</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex gap-8 font-medium relative items-center">
+                <a href="dashboard.html">
+                    <li class="hover:text-green-700 cursor-pointer">Home</li>
+                </a>
+                <a href="browserequest.html">
+                    <li class="hover:text-green-700 cursor-pointer">Browse Request</li>
+                </a>
+                <a href="sent-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">Sent Requests</li>
+                </a>
+                <a href="received-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">Received Requests</li>
+                </a>
+                <a href="accepted-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">My Deals</li>
+                </a>
+                <li class="hover:text-verified cursor-pointer transition">
+                    <span class="material-symbols-outlined align-middle">notifications</span>
+                </li>
+
+                <button class="text-base text-ink/70 hover:text-verified transition" onclick="customMenu()">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <!-- Mylist  -->
+                <div id="customList"
+                    class="hidden bg-white shadow-xl rounded-2xl border border-ink/10 top-9 right-0 absolute w-44 overflow-hidden">
+                    <ul class="flex flex-col p-2 gap-1">
+                        <a href="profile.html">
+                            <li class="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-paper text-sm">
+                                <span class="material-symbols-outlined text-verified text-xl">account_circle</span>
+                                Profile
+                            </li>
+                        </a>
+                        <a href="../index.html">
+                            <li class="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-paper text-sm">
+                                <span id="logout" onclick="logoutFun()" class="material-symbols-outlined text-rust text-xl">logout</span>
+                                Sign Out
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </ul>
+
+            <!-- Burger Menu -->
+            <button class="md:hidden text-2xl text-ink" onclick="toggleMenu()" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-paper border-t border-ink/10">
+            <ul class="flex flex-col p-5 gap-4 text-ink/80 font-medium">
+                <a href="dashboard.html"><li>Home</li></a>
+                <a href="browserequest.html"><li>Browse Request</li></a>
+                <a href="sent-request.html"><li>Sent Requests</li></a>
+                <a href="received-request.html"><li>Received Requests</li></a>
+                <li><span class="material-symbols-outlined align-middle">notifications</span> Notifications</li>
+                <li>
+                    <span id="logout" onclick="logoutFun()" class="material-symbols-outlined align-middle text-rust">logout</span>
+                    Sign Out
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-5 ">
+
+        <!-- Back -->
+        <div class="pt-6">
+            <button onclick="backPopup()" class="flex items-center gap-1 text-gray-500 hover:text-emerald-700 transition-colors text-sm font-medium p-3 pr-5">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Back to Dashboard
+            </button>
+        </div>
+
+     <!-- ================= REQUEST HEADER ================= -->
+
+<div id="requestHeader"
+    class="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 md:p-8">
+
+    <!-- Top -->
+    <div class="flex justify-between items-center flex-wrap gap-6">
+
+        <!-- User -->
+        <div class="flex items-center gap-5">
+
+            <div id="userAvatar"
+                class="w-20 h-20 rounded-full bg-emerald-600 text-white text-3xl font-bold flex justify-center items-center">
+                H
+            </div>
+
+            <div>
+
+                <h2 id="userName"
+                    class="text-2xl font-bold text-gray-900">
+                    Halima
+                </h2>
+
+                <p class="text-gray-500 mt-1 flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                    <span id="userLocation">
+                        Chennai, Tamil Nadu
+                    </span>
+                </p>
+
+                <div class="flex gap-2 mt-3">
+
+                    <span id="requestType"
+                        class="bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">
+                        Cash Request
+                    </span>
+
+                    <span id="statusBadge"
+                        class="bg-yellow-50 text-yellow-700 ring-1 ring-yellow-200 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+
+                        <i class="fa-solid fa-clock"></i>
+
+                        Pending
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Amount -->
+
+        <div class="text-right">
+
+            <p class="text-gray-400 uppercase tracking-wider text-xs font-medium">
+                Requested Amount
+            </p>
+
+            <h1 id="requestAmount"
+                class="text-4xl font-bold text-emerald-600 mt-1">
+
+                ₹15,000
+
+            </h1>
+
+            <p class="text-xs text-gray-500 mt-2 flex items-center justify-end gap-1">
+
+                <i class="fa-solid fa-calendar text-emerald-500"></i>
+
+                <span id="requestDate">
+                    31 Jul 2026
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Divider -->
+
+    <div class="border-t border-gray-100 my-7"></div>
+
+    <!-- Cards -->
+
+    <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Request Info -->
+
+        <div
+            class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+            <h3
+                class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+
+                <i class="fa-solid fa-file-circle-check text-emerald-600"></i>
+
+                Request Information
+
+            </h3>
+
+            <div class="space-y-3 text-sm">
+
+                <div class="flex justify-between">
+
+                    <span class="text-gray-500">
+                        Request ID
+                    </span>
+
+                    <span id="requestId"
+                        class="font-semibold text-gray-800">
+                        #REQ001
+                    </span>
+
+                </div>
+
+                <div class="flex justify-between">
+
+                    <span class="text-gray-500">
+                        Request Type
+                    </span>
+
+                    <span id="typeText"
+                        class="font-semibold text-gray-800">
+
+                        Cash
+
+                    </span>
+
+                </div>
+
+                <div class="flex justify-between">
+
+                    <span class="text-gray-500">
+                        Purpose
+                    </span>
+
+                    <span id="purpose"
+                        class="font-semibold text-gray-800">
+
+                        Education
+
+                    </span>
+
+                </div>
+
+                <div class="flex justify-between">
+
+                    <span class="text-gray-500">
+                        Status
+                    </span>
+
+                    <span id="statusText"
+                        class="text-yellow-600 font-semibold">
+
+                        Pending
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+<!-- Request Summary -->
+
+<div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+    <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+
+        <i class="fa-solid fa-clipboard-list text-emerald-600"></i>
+
+        Request Summary
+
+    </h3>
+
+    <div class="space-y-4 text-sm">
+
+        <div class="flex justify-between">
+
+            <span class="text-gray-500">
+                Amount
+            </span>
+
+            <span id="summaryAmount"
+                class="font-bold text-emerald-600">
+                ₹10,000
+            </span>
+
+        </div>
+
+        <div class="flex justify-between">
+
+            <span class="text-gray-500">
+                Purpose
+            </span>
+
+            <span id="summaryReason"
+                class="font-semibold text-gray-800">
+                Education
+            </span>
+
+        </div>
+
+        <div class="flex justify-between">
+
+            <span class="text-gray-500">
+                Request Type
+            </span>
+
+            <span id="summaryType"
+                class="font-semibold text-gray-800">
+                Card
+            </span>
+
+        </div>
+
+        <div class="flex justify-between">
+
+            <span class="text-gray-500">
+                Status
+            </span>
+
+            <span id="summaryStatus"
+                class="font-semibold text-emerald-600">
+                Pending
+            </span>
+
+        </div>
+
+        <div class="flex justify-between">
+
+            <span class="text-gray-500">
+                Created On
+            </span>
+
+            <span id="summaryDate"
+                class="font-semibold text-gray-800">
+                31 Jul 2026
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+
+<!-- ================= DESCRIPTION ================= -->
+
+<div class="mt-7">
+
+    <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info text-gray-400"></i>
+        Request Description
+    </h3>
+
+    <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
+
+        <p id="description"
+            class="leading-7 text-gray-700 text-sm">
+
+            Need financial support for education expenses.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= CONTACT INFO ================= -->
+
+<div class="mt-7">
+
+    <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-address-card text-gray-400"></i>
+        Contact Information
+    </h3>
+
+    <div id="contactBox"
+        class="rounded-xl bg-gray-50 border border-gray-200 p-5 mb-2">
+
+        <div class="flex items-center gap-3">
+
+            <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
+
+            <div>
+
+                <p class="font-semibold text-gray-700">
+                    Contact Hidden
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Accept this request to reveal the contact information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= MEETING DETAILS ================= -->
+
+<div id="meetingDetailsBox" class="hidden mt-7 mb-10">
+
+    <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+
+        <i class="fa-solid fa-calendar-check text-emerald-600"></i>
+
+        Meeting Details
+
+    </h3>
+
+
+    <div class="bg-white border border-gray-200 rounded-xl p-5">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+
+            <!-- Date -->
+
+            <div class="bg-gray-50 rounded-xl p-4">
+
+                <p class="text-xs text-gray-500 mb-1">
+                    Meeting Date
+                </p>
+
+                <p id="viewMeetingDate"
+                    class="font-semibold text-gray-800">
+                </p>
+
+            </div>
+
+
+            <!-- Time -->
+
+            <div class="bg-gray-50 rounded-xl p-4">
+
+                <p class="text-xs text-gray-500 mb-1">
+                    Meeting Time
+                </p>
+
+                <p id="viewMeetingTime"
+                    class="font-semibold text-gray-800">
+                </p>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <div class="bg-gray-50 rounded-xl p-4">
+
+                <p class="text-xs text-gray-500 mb-1">
+                    Meeting Location
+                </p>
+
+                <p id="viewMeetingLocation"
+                    class="font-semibold text-gray-800">
+                </p>
+
+            </div>
+
+
+            <!-- Note -->
+
+            <div class="bg-gray-50 rounded-xl p-4">
+
+                <p class="text-xs text-gray-500 mb-1">
+                    Note
+                </p>
+
+                <p id="viewMeetingNote"
+                    class="font-semibold text-gray-800">
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= COMPLETE EXCHANGE ================= -->
+
+<div id="completeSection" class="hidden mt-7">
+
+    <button id="completeBtn"
+        class="w-full bg-emerald-600 hover:bg-emerald-700
+               text-white font-semibold py-3 rounded-xl transition">
+
+        <i class="fa-solid fa-circle-check mr-2"></i>
+
+        Complete Exchange
+
+    </button>
+
+</div>
+
+<!-- ================= ACTION BUTTONS ================= -->
+
+<div id="actionButtons" class="mt-8 border-t border-gray-100 pt-6 flex justify-end gap-3 flex-wrap">
+
+    <button id="rejectBtn"
+        class="border border-red-500 text-red-600 px-6 py-3 rounded-xl hover:bg-red-50 transition">
+
+        <i class="fa-solid fa-xmark mr-2"></i>
+
+        Reject
+
+    </button>
+
+    <button id="acceptBtn"
+        class="bg-emerald-600 text-white px-6 py-3 rounded-xl hover:bg-emerald-700 transition">
+
+        <i class="fa-solid fa-check mr-2"></i>
+
+        Accept Request
+
+    </button>
+
+</div>
+   
+<!-- ================= MEETING POPUP ================= -->
+
+<div id="meetingPopup"
+    class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center px-4 ">
+
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl p-6">
+
+        <div class="flex justify-between items-center mb-5">
+
+            <div>
+                <h2 class="text-xl font-bold text-gray-900">
+                    Confirm Acceptance
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Add meeting details to continue.
+                </p>
+            </div>
+
+            <button onclick="closeMeetingPopup()"
+                class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+       <!-- Meeting Details Grid -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 ">
+
+    <!-- Date -->
+    <div>
+        <label class="text-sm font-medium text-gray-700">
+            Meeting Date
+        </label>
+
+        <input
+            type="date"
+            id="meetingDate"
+            class="w-full mt-2 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-emerald-500">
+    </div>
+
+
+    <!-- Time -->
+    <div>
+        <label class="text-sm font-medium text-gray-700">
+            Meeting Time
+        </label>
+
+        <input
+            type="time"
+            id="meetingTime"
+            class="w-full mt-2 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-emerald-500">
+    </div>
+
+
+    <!-- Location -->
+    <div>
+        <label class="text-sm font-medium text-gray-700">
+            Meeting Location
+        </label>
+
+        <input
+            type="text"
+            id="meetingLocation"
+            placeholder="Eg: Anna Nagar"
+            class="w-full mt-2 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-emerald-500">
+    </div>
+
+
+    <!-- Note -->
+    <div>
+        <label class="text-sm font-medium text-gray-700">
+            Note <span class="text-gray-400">(Optional)</span>
+        </label>
+
+        <input
+            type="text"
+            id="meetingNote"
+            placeholder="Eg: Near main entrance"
+            class="w-full mt-2 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-emerald-500">
+    </div>
+
+</div>
+
+
+        <div class="flex gap-3">
+
+            <button onclick="closeMeetingPopup()"
+                class="w-1/2 border border-gray-200 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-50">
+
+                Cancel
+
+            </button>
+
+            <button onclick="confirmAccept()"
+                class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl font-medium hover:bg-emerald-700">
+
+                Confirm Accept
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    const customMenu = () => {
+    document.getElementById("customList").classList.toggle("hidden");
+}
+
+    const backPopup = () => {
+
+        window.location.href = "dashboard.html";
+
+    }
+    // ================= LOAD REQUEST =================
+
+let request = JSON.parse(localStorage.getItem("selectedRequest"));
+let currentUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+if (!request) {
+    alert("No Request Found");
+    window.location.href = "browserequest.html";
+}
+
+
+// ================= HEADER =================
+
+document.getElementById("userAvatar").innerText =
+request.userName.charAt(0).toUpperCase();
+
+document.getElementById("userName").innerText =
+request.userName;
+
+document.getElementById("userLocation").innerText =
+request.address || "Location Not Available";
+
+document.getElementById("requestAmount").innerHTML =
+"₹" + request.amount;
+
+document.getElementById("requestDate").innerText =
+request.createdAt;
+
+document.getElementById("requestId").innerText =
+"#REQ" + request.id;
+
+document.getElementById("typeText").innerText =
+request.requestType;
+
+document.getElementById("requestType").innerText =
+request.requestType + " Request";
+
+document.getElementById("purpose").innerText =
+request.reason;
+
+document.getElementById("statusText").innerText =
+request.status;
+
+document.getElementById("summaryAmount").innerHTML = "₹" + request.amount;
+
+document.getElementById("summaryReason").innerHTML = request.reason;
+
+document.getElementById("summaryType").innerHTML = request.requestType;
+
+document.getElementById("summaryStatus").innerHTML = request.status;
+
+document.getElementById("summaryDate").innerHTML = request.createdAt;
+
+
+// ================= STATUS BADGE =================
+
+let badge = document.getElementById("statusBadge");
+
+badge.innerHTML = request.status;
+
+if(request.status=="Pending"){
+
+    badge.className =
+    "bg-yellow-50 text-yellow-700 ring-1 ring-yellow-200 px-3 py-1 rounded-full text-xs font-semibold";
+
+}
+
+else if(request.status=="Accepted"){
+
+    badge.className =
+    "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 px-3 py-1 rounded-full text-xs font-semibold";
+
+}
+
+else{
+
+    badge.className =
+    "bg-red-50 text-red-700 ring-1 ring-red-200 px-3 py-1 rounded-full text-xs font-semibold";
+
+}
+
+
+
+
+// ================= DESCRIPTION =================
+
+document.getElementById("description").innerText =
+request.description;
+
+// ================= ACCEPT BUTTON =================
+
+document.getElementById("acceptBtn").addEventListener("click", () => {
+
+    document.getElementById("meetingPopup").classList.remove("hidden");
+
+});
+
+function closeMeetingPopup() {
+
+    document.getElementById("meetingPopup").classList.add("hidden");
+
+}
+
+function confirmAccept() {
+
+    let date = document.getElementById("meetingDate").value;
+    let time = document.getElementById("meetingTime").value;
+    let location = document.getElementById("meetingLocation").value.trim();
+    let note = document.getElementById("meetingNote").value.trim();
+
+
+    // Validation
+    if (date === "" || time === "" || location === "") {
+
+        alert("Please fill meeting date, time and location");
+        return;
+
+    }
+
+
+    // ================= ACCEPTED USER DETAILS =================
+
+    request.acceptedBy = {
+
+        id: currentUser.id,
+        name: currentUser.name,
+        email: currentUser.email,
+        number: currentUser.number,
+        address: currentUser.address
+
+    };
+
+
+    // ================= MEETING DETAILS =================
+
+    request.meeting = {
+
+        date: date,
+        time: time,
+        location: location,
+        note: note
+
+    };
+
+
+    request.acceptedAt = new Date().toLocaleString();
+
+    request.status = "Accepted";
+
+
+    // ================= UPDATE REQUEST DATABASE =================
+
+    let requestDb =
+        JSON.parse(localStorage.getItem("requests")) || [];
+
+    let index =
+        requestDb.findIndex(e => String(e.id) === String(request.id));
+
+
+    if (index !== -1) {
+
+        requestDb[index] = request;
+
+    }
+
+
+    localStorage.setItem(
+        "requests",
+        JSON.stringify(requestDb)
+    );
+
+
+    localStorage.setItem(
+        "selectedRequest",
+        JSON.stringify(request)
+    );
+
+
+    // ================= CLOSE POPUP =================
+
+    closeMeetingPopup();
+
+
+    // ================= UPDATE PAGE =================
+
+    document.getElementById("statusBadge").innerText =
+        "Accepted";
+
+    document.getElementById("statusBadge").className =
+        "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 px-3 py-1 rounded-full text-xs font-semibold";
+
+
+    document.getElementById("statusText").innerText =
+        "Accepted";
+
+
+    document.getElementById("summaryStatus").innerText =
+        "Accepted";
+
+        // ================= SHOW CONTACT AFTER ACCEPT =================
+
+document.getElementById("contactBox").innerHTML = `
+
+    <div class="space-y-4 m-2">
+
+        <div>
+            <b>Name :</b> ${request.userName}
+        </div>
+
+        <div>
+            <b>Email :</b> ${request.userEmail}
+        </div>
+
+        <div>
+            <b>Phone :</b> ${request.number}
+        </div>
+
+        <div>
+            <b>Address :</b> ${request.address}
+        </div>
+
+    </div>
+
+`;
+
+    // ================= DISABLE ACTION =================
+
+    document.getElementById("acceptBtn").disabled = true;
+    document.getElementById("rejectBtn").disabled = true;
+
+
+    document.getElementById("acceptBtn").innerHTML =
+        '<i class="fa-solid fa-check mr-2"></i> Accepted';
+
+
+    // ================= SUCCESS =================
+
+    alert("Request Accepted Successfully!");
+
+}
+
+// ================= REJECT BUTTON =================
+
+document.getElementById("rejectBtn").addEventListener("click", () => {
+
+    request.status = "Rejected";
+
+    let requestDb = JSON.parse(localStorage.getItem("requests")) || [];
+
+    let index = requestDb.findIndex(e => e.id == request.id);
+
+    if (index != -1) {
+        requestDb[index] = request;
+    }
+
+    localStorage.setItem("requests", JSON.stringify(requestDb));
+    localStorage.setItem("selectedRequest", JSON.stringify(request));
+
+    document.getElementById("statusBadge").innerHTML = "Rejected";
+
+    document.getElementById("statusBadge").className =
+        "bg-red-50 text-red-700 ring-1 ring-red-200 px-3 py-1 rounded-full text-xs font-semibold";
+
+    document.getElementById("statusText").innerHTML = "Rejected";
+
+    document.getElementById("acceptBtn").disabled = true;
+    document.getElementById("rejectBtn").disabled = true;
+
+    document.getElementById("rejectBtn").innerHTML =
+        '<i class="fa-solid fa-ban"></i> Rejected';
+
+    alert("Request Rejected!");
+
+});
+
+
+// ================= ALREADY ACCEPTED / REJECTED =================
+
+if (request.status == "Accepted") {
+
+    document.getElementById("acceptBtn").disabled = true;
+    document.getElementById("rejectBtn").disabled = true;
+
+    document.getElementById("acceptBtn").innerHTML =
+        '<i class="fa-solid fa-check"></i> Accepted';
+
+    document.getElementById("contactBox").innerHTML = `
+
+        <div class="space-y-4">
+
+            <div><b>Name :</b> ${request.userName}</div>
+
+            <div><b>Email :</b> ${request.userEmail}</div>
+
+            <div><b>Phone :</b> ${request.number}</div>
+
+            <div><b>Address :</b> ${request.address}</div>
+
+        </div>
+
+    `;
+}
+
+if (request.status == "Rejected") {
+
+    document.getElementById("acceptBtn").disabled = true;
+    document.getElementById("rejectBtn").disabled = true;
+
+    document.getElementById("rejectBtn").innerHTML =
+        '<i class="fa-solid fa-ban"></i> Rejected';
+}
+// ================= MY CONNECTION VIEW =================
+
+let detailSource = localStorage.getItem("detailSource");
+
+if (detailSource === "connection") {
+
+    // Hide Accept / Reject
+    document.getElementById("actionButtons").classList.add("hidden");
+
+    // Show requester contact
+    document.getElementById("contactBox").innerHTML = `
+
+        <div class="space-y-4 m-2">
+
+            <div>
+                <b>Name :</b> ${request.userName}
+            </div>
+
+            <div>
+                <b>Email :</b> ${request.userEmail}
+            </div>
+
+            <div>
+                <b>Phone :</b> ${request.number}
+            </div>
+
+            <div>
+                <b>Address :</b> ${request.address}
+            </div>
+
+        </div>
+
+    `;
+
+    // Show Meeting Details
+document.getElementById("meetingDetailsBox").classList.remove("hidden");
+
+document.getElementById("viewMeetingDate").innerText =
+    request.meeting?.date || "Not set";
+
+document.getElementById("viewMeetingTime").innerText =
+    request.meeting?.time || "Not set";
+
+document.getElementById("viewMeetingLocation").innerText =
+    request.meeting?.location || "Not set";
+
+document.getElementById("viewMeetingNote").innerText =
+    request.meeting?.note || "No note";
+
+    document.getElementById("completeSection").classList.remove("hidden");
+}
+
+// ================= COMPLETE EXCHANGE =================
+
+document.getElementById("completeBtn").addEventListener("click", () => {
+
+    let confirmComplete = confirm(
+        "Are you sure the exchange has been completed?"
+    );
+
+    if (!confirmComplete) {
+        return;
+    }
+
+    // Change status
+    request.status = "Completed";
+    request.completedAt = new Date().toLocaleString();
+
+    // Get requests
+    let requestDb =
+        JSON.parse(localStorage.getItem("requests")) || [];
+
+    // Find this request
+    let index = requestDb.findIndex(
+        e => String(e.id) === String(request.id)
+    );
+
+    // Update
+    if (index !== -1) {
+        requestDb[index] = request;
+    }
+
+    // Save
+    localStorage.setItem(
+        "requests",
+        JSON.stringify(requestDb)
+    );
+
+    localStorage.setItem(
+        "selectedRequest",
+        JSON.stringify(request)
+    );
+
+    alert("Exchange Completed Successfully!");
+
+    // Back to My Connections
+    window.location.href = "accepted-request.html";
+
+});
+   </script>
+</body>
+
+</html>

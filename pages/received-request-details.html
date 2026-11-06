@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashConnect</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    <script>
+         tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#122A25',
+                        verified: '#1D7A5C',
+                        'verified-deep': '#124E3B',
+                        paper: '#FBF8F1',
+                        amber: '#C4872E',
+                        rust: '#AE4A32',
+                        slate: '#4A5551',
+                    },
+                    fontFamily: {
+                        display: ['Fraunces', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-white relative">
+   <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="flex justify-between items-center px-5 py-3">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img src="../assets/logo.png" width="50px">
+                <div>
+                    <p class="text-green-700 text-2xl font-bold">
+                        Cash<span class="text-black">Connect</span>
+                    </p>
+                    <p class="text-xs">Connecting People, Building Trust</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex gap-8 font-medium relative items-center">
+                <a href="dashboard.html">
+                    <li class="hover:text-green-700 cursor-pointer">Home</li>
+                </a>
+                <a href="browserequest.html">
+                    <li class="hover:text-green-700 cursor-pointer">Browse Request</li>
+                </a>
+                <a href="sent-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">Sent Requests</li>
+                </a>
+                <a href="received-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">Received Requests</li>
+                </a>
+                <a href="accepted-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">My Deals</li>
+                </a>
+                <li class="hover:text-verified cursor-pointer transition">
+                    <span class="material-symbols-outlined align-middle">notifications</span>
+                </li>
+
+                <button class="text-base text-ink/70 hover:text-verified transition" onclick="customMenu()">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <!-- Mylist  -->
+                <div id="customList"
+                    class="hidden bg-white shadow-xl rounded-2xl border border-ink/10 top-9 right-0 absolute w-44 overflow-hidden">
+                    <ul class="flex flex-col p-2 gap-1">
+                        <a href="profile.html">
+                            <li class="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-paper text-sm">
+                                <span class="material-symbols-outlined text-verified text-xl">account_circle</span>
+                                Profile
+                            </li>
+                        </a>
+                        <a href="../index.html">
+                            <li class="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-paper text-sm">
+                                <span id="logout" onclick="logoutFun()" class="material-symbols-outlined text-rust text-xl">logout</span>
+                                Sign Out
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </ul>
+
+            <!-- Burger Menu -->
+            <button class="md:hidden text-2xl text-ink" onclick="toggleMenu()" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-paper border-t border-ink/10">
+            <ul class="flex flex-col p-5 gap-4 text-ink/80 font-medium">
+                <a href="dashboard.html"><li>Home</li></a>
+                <a href="browserequest.html"><li>Browse Request</li></a>
+                <a href="sent-request.html"><li>Sent Requests</li></a>
+                <a href="received-request.html"><li>Received Requests</li></a>
+                <li><span class="material-symbols-outlined align-middle">notifications</span> Notifications</li>
+                <li>
+                    <span id="logout" onclick="logoutFun()" class="material-symbols-outlined align-middle text-rust">logout</span>
+                    Sign Out
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <main class="max-w-5xl mx-auto px-5 py-8">
+
+    <!-- Back -->
+    <button onclick="window.location.href='received-request.html'"
+        class="flex items-center gap-2 text-sm text-gray-500 hover:text-emerald-700 mb-7">
+
+        <span class="material-symbols-outlined text-lg">
+            arrow_back
+        </span>
+
+        Back to Received Requests
+    </button>
+
+
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+
+        <!-- HEADER -->
+        <div class="p-6 md:p-8 flex justify-between items-start gap-5 flex-wrap">
+
+            <div>
+
+                <span
+                    class="inline-block text-xs font-semibold uppercase tracking-wide
+                           bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">
+
+                    Direct Request
+
+                </span>
+
+                <h1 id="detailAmount"
+                    class="text-4xl font-bold text-gray-900 mt-4">
+                </h1>
+
+                <p id="detailType"
+                    class="text-gray-500 mt-1">
+                </p>
+
+            </div>
+
+
+            <span id="detailStatus"
+                class="px-3 py-1 rounded-full text-xs font-semibold">
+            </span>
+
+        </div>
+
+
+        <!-- ================= SENT BY ================= -->
+
+        <div class="border-t border-gray-100 p-6 md:p-8">
+
+            <h2 class="font-bold text-gray-900 mb-5">
+                Sent By
+            </h2>
+
+            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div>
+                        <p class="text-xs text-gray-400">Name</p>
+                        <p id="senderName"
+                            class="font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400">Email</p>
+                        <p id="senderEmail"
+                            class="font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400">Phone</p>
+                        <p id="senderPhone"
+                            class="font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400">Address</p>
+                        <p id="senderAddress"
+                            class="font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= REQUEST INFO ================= -->
+
+        <div class="border-t border-gray-100 p-6 md:p-8">
+
+            <h2 class="font-bold text-gray-900 mb-5">
+                Request Information
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400">
+                        Purpose
+                    </p>
+
+                    <p id="detailReason"
+                        class="font-semibold text-gray-800 mt-1">
+                    </p>
+                </div>
+
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400">
+                        Created On
+                    </p>
+
+                    <p id="detailCreated"
+                        class="font-semibold text-gray-800 mt-1">
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="mt-4 bg-gray-50 rounded-xl p-4">
+
+                <p class="text-xs text-gray-400">
+                    Description
+                </p>
+
+                <p id="detailDescription"
+                    class="text-gray-700 mt-2 leading-6">
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= MEETING DETAILS ================= -->
+
+        <div id="receivedMeetingSection"
+            class="hidden border-t border-gray-100 p-6 md:p-8">
+
+            <h2 class="font-bold text-gray-900 mb-5">
+
+                <i class="fa-solid fa-calendar-check
+                          text-emerald-600 mr-2"></i>
+
+                Meeting Details
+
+            </h2>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400">Date</p>
+                    <p id="meetingDetailDate"
+                        class="font-semibold mt-1"></p>
+                </div>
+
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400">Time</p>
+                    <p id="meetingDetailTime"
+                        class="font-semibold mt-1"></p>
+                </div>
+
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400">Location</p>
+                    <p id="meetingDetailLocation"
+                        class="font-semibold mt-1"></p>
+                </div>
+
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400">Note</p>
+                    <p id="meetingDetailNote"
+                        class="font-semibold mt-1"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= COMPLETE ================= -->
+
+        <div id="receivedCompleteSection"
+            class="hidden border-t border-gray-100 p-6 md:p-8">
+
+            <button id="receivedCompleteBtn"
+                class="w-full bg-emerald-600 hover:bg-emerald-700
+                       text-white font-semibold py-3 rounded-xl transition">
+
+                <i class="fa-solid fa-circle-check mr-2"></i>
+
+                Complete Exchange
+
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+<script>
+const customMenu = () => {
+    document.getElementById("customList").classList.toggle("hidden");
+}
+
+let request =
+    JSON.parse(localStorage.getItem("selectedReceivedRequest"));
+
+if (!request) {
+    alert("Request not found");
+    window.location.href = "received-request.html";
+}
+
+
+// ================= BASIC DETAILS =================
+
+document.getElementById("detailAmount").innerText =
+    "₹" + request.amount;
+
+document.getElementById("detailType").innerText =
+    request.requestType + " Request";
+
+document.getElementById("detailReason").innerText =
+    request.reason || "Not provided";
+
+document.getElementById("detailCreated").innerText =
+    request.createdAt || "Not available";
+
+document.getElementById("detailDescription").innerText =
+    request.description || "No description provided";
+
+
+// ================= SENDER DETAILS =================
+
+document.getElementById("senderName").innerText =
+    request.senderName || request.userName || "Not available";
+
+document.getElementById("senderEmail").innerText =
+    request.userEmail || "Not available";
+
+document.getElementById("senderPhone").innerText =
+    request.number || "Not available";
+
+document.getElementById("senderAddress").innerText =
+    request.address || "Not available";
+
+
+// ================= STATUS =================
+
+let statusBadge =
+    document.getElementById("detailStatus");
+
+statusBadge.innerText = request.status;
+
+if (request.status === "Pending") {
+
+    statusBadge.className =
+        "bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold";
+
+}
+else if (request.status === "Accepted") {
+
+    statusBadge.className =
+        "bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold";
+
+}
+else if (request.status === "Rejected") {
+
+    statusBadge.className =
+        "bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-semibold";
+
+}
+
+
+// ================= ACCEPTED VIEW =================
+
+if (request.status === "Accepted") {
+
+    // Show meeting
+    document
+        .getElementById("receivedMeetingSection")
+        .classList.remove("hidden");
+
+    document.getElementById("meetingDetailDate").innerText =
+        request.meeting?.date || "Not set";
+
+    document.getElementById("meetingDetailTime").innerText =
+        request.meeting?.time || "Not set";
+
+    document.getElementById("meetingDetailLocation").innerText =
+        request.meeting?.location || "Not set";
+
+    document.getElementById("meetingDetailNote").innerText =
+        request.meeting?.note || "No note";
+
+
+    // Show complete button
+    document
+        .getElementById("receivedCompleteSection")
+        .classList.remove("hidden");
+
+}
+
+
+// ================= COMPLETE EXCHANGE =================
+
+document
+    .getElementById("receivedCompleteBtn")
+    .addEventListener("click", () => {
+
+        let confirmComplete = confirm(
+            "Are you sure the exchange has been completed?"
+        );
+
+        if (!confirmComplete) {
+            return;
+        }
+
+
+        // Get latest requests
+        let requestDb =
+            JSON.parse(localStorage.getItem("requests")) || [];
+
+        let index = requestDb.findIndex(
+            r => String(r.id) === String(request.id)
+        );
+
+        if (index === -1) {
+            alert("Request not found");
+            return;
+        }
+
+
+        // Complete
+        request.status = "Completed";
+        request.completedAt =
+            new Date().toLocaleString();
+
+        requestDb[index] = request;
+
+
+        // Save
+        localStorage.setItem(
+            "requests",
+            JSON.stringify(requestDb)
+        );
+
+        localStorage.setItem(
+            "selectedReceivedRequest",
+            JSON.stringify(request)
+        );
+
+
+        alert("Exchange Completed Successfully!");
+
+        window.location.href =
+            "received-request.html";
+
+    });
+
+</script>
+</body>
+</html>
