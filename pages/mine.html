@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashConnect — Cash Holders</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body class="bg-gradient-to-br from-[#0F766E] via-[#065F46] to-[#022C22] min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+        <div class="flex justify-between items-center px-5 py-3 max-w-7xl mx-auto">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <img src="../assets/logo.png" width="42px">
+                <div>
+                    <p class="text-emerald-700 text-xl font-bold leading-tight">
+                        Cash<span class="text-gray-900">Connect</span>
+                    </p>
+                    <p class="text-[11px] text-gray-400">Connecting People, Building Trust</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex gap-8 font-medium text-sm text-gray-600 relative items-center">
+                <a href="dashboard.html">
+                    <li class="hover:text-emerald-700 transition cursor-pointer">Home</li>
+                </a>
+                <a href="browserequest.html">
+                    <li class="hover:text-emerald-700 transition cursor-pointer">Browse Request</li>
+                </a>
+                <a href="sent-request.html">
+                    <li class="hover:text-emerald-700 transition cursor-pointer">Sent Requests</li>
+                </a>
+                <a href="received-request.html">
+                    <li class="hover:text-emerald-700 transition cursor-pointer">Received Requests</li>
+                </a>
+                <li class="hover:text-emerald-700 transition cursor-pointer">
+                    <span class="material-symbols-outlined text-[20px] align-middle">notifications</span>
+                </li>
+
+                <button class="text-gray-500 hover:text-emerald-700 transition" onclick="customMenu()">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+
+                <!-- Mylist  -->
+                <div id="customList"
+                    class="hidden bg-white shadow-xl rounded-xl border border-gray-100 top-8 right-0 absolute overflow-hidden">
+                    <ul class="flex flex-col p-1.5 w-40">
+                        <a href="profile.html">
+                            <li class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-gray-50 transition">
+                                <span class="material-symbols-outlined text-[18px]">account_circle</span>Profile
+                            </li>
+                        </a>
+                        <a href="../index.html">
+                            <li id="logout" onclick="logoutFun()"
+                                class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-gray-50 transition">
+                                <span class="material-symbols-outlined text-[18px]">logout</span>Sign out
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </ul>
+
+            <!-- Burger Menu -->
+            <button class="md:hidden text-2xl text-gray-700" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <ul class="flex flex-col p-5 gap-4 text-sm text-gray-600">
+                <a href="dashboard.html"><li>Home</li></a>
+                <a href="browserequest.html"><li>Browse Request</li></a>
+                <a href="sent-request.html"><li>Sent Requests</li></a>
+                <a href="received-request.html"><li>Received Requests</li></a>
+                <li><span class="material-symbols-outlined text-[20px] align-middle">notifications</span></li>
+                <li id="logout" onclick="logoutFun()" class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>Sign out
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <button onclick="backPopup()"
+        class="mt-4 ml-5 flex items-center gap-1.5 text-sm text-white/80 hover:text-white bg-white/10 border border-white/15 rounded-full px-3 py-1.5 backdrop-blur-sm transition w-fit">
+        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+        Back
+    </button>
+
+    <!-- Header -->
+    <div class="max-w-7xl mx-auto px-5">
+        <div class="flex flex-col items-center text-center py-10">
+            <span class="font-mono text-xs tracking-widest text-emerald-300">BROWSE</span>
+            <h2 class="text-3xl sm:text-5xl font-semibold text-white mt-1">
+                Cash
+                <span class="bg-gradient-to-r from-lime-500 via-green-400 to-emerald-500 bg-clip-text text-transparent pl-1">Holders</span>
+            </h2>
+            <p class="text-white/50 text-sm sm:text-base mt-2 max-w-md">
+                Committed to helping through secure cash support.
+            </p>
+            <p id="resultCount" class="font-mono text-xs tracking-widest text-white/40 mt-4"></p>
+        </div>
+
+        <!-- Card grid -->
+        <div id="cashHoldersCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16"></div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="hidden flex-col items-center text-center py-20">
+            <span class="material-symbols-outlined text-5xl text-white/25">payments</span>
+            <h3 class="font-semibold text-white/80 mt-3">No cash holders yet</h3>
+            <p class="text-white/40 text-sm mt-1">Check back soon — new members join regularly.</p>
+        </div>
+    </div>
+
+    <script>
+        loadUser();
+
+        function loadUser() {
+
+            let userDb = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Cash holders
+            let cashUsers = userDb
+                .filter(user => user.role === "Cash Holder")
+                .reverse();
+
+            let cashContainer = document.getElementById("cashHoldersCards");
+            const cashdescriptions = [
+                "Providing cash support when it matters most.",
+                "Helping people with reliable cash assistance.",
+                "Ready to support genuine financial needs.",
+                "Offering trusted cash support to the community.",
+                "Making financial help simple and accessible.",
+                "Committed to helping through secure cash support.",
+                "Supporting people with available cash assistance.",
+                "Here to provide reliable financial support.",
+                "Helping users through trusted cash assistance.",
+                "Available to support genuine cash requirements."
+            ];
+
+            document.getElementById("resultCount").innerText =
+                cashUsers.length + (cashUsers.length === 1 ? " MEMBER FOUND" : " MEMBERS FOUND");
+
+            if (cashUsers.length === 0) {
+                document.getElementById("emptyState").classList.remove("hidden");
+                document.getElementById("emptyState").classList.add("flex");
+                return;
+            }
+
+            cashUsers.forEach((user, index) => {
+
+                let description = cashdescriptions[index % cashdescriptions.length];
+                let card = `
+
+    <div class="bg-white border border-black/5 shadow-xl hover:-translate-y-0.5 transition rounded-2xl p-5">
+        <div class="flex justify-between items-start">
+            <div class="flex gap-3 items-center">
+                <div class="w-11 h-11 rounded-full bg-emerald-600 text-white flex justify-center items-center text-lg font-semibold">
+                    ${user.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                    <h2 class="font-semibold text-gray-900 leading-tight">${user.name}</h2>
+                    <p class="text-gray-400 text-xs mt-0.5">${user.city}, ${user.state}</p>
+                </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-medium border border-emerald-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Available
+            </span>
+        </div>
+
+        <div class="mt-4 bg-gray-50 border border-gray-100 rounded-xl p-3">
+            <p class="text-gray-400 text-xs font-mono tracking-widest">AVAILABLE CASH</p>
+            <p class="text-emerald-700 text-2xl font-bold mt-1">₹ ${user.cashdetails.availableAmount}</p>
+        </div>
+
+        <p class="text-gray-500 text-sm mt-4 leading-relaxed">${description}</p>
+
+        <button onclick="viewDetails('${user.id}')"
+            class="w-full mt-4 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm py-2.5 rounded-xl transition">
+            View details
+        </button>
+    </div>
+`;
+
+                cashContainer.innerHTML += card;
+
+            });
+        }
+
+        const viewDetails = (id) => {
+            localStorage.setItem("selectedUserId", id);
+            window.location.href = "view-details.html";
+        }
+
+        const backPopup = () => {
+            window.location.href = "dashboard.html"
+        }
+
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("hidden");
+        }
+
+        const customMenu = () => {
+            document.getElementById("customList").classList.toggle("hidden");
+        }
+    </script>
+</body>
+
+</html>

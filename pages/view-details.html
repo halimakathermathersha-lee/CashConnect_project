@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashConnect</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+     <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="flex justify-between items-center px-5 py-3">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img src="../assets/logo.png" width="50px">
+                <div>
+                    <p class="text-green-700 text-2xl font-bold">
+                        Cash<span class="text-black">Connect</span>
+                    </p>
+                    <p class="text-xs">Connecting People, Building Trust</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex gap-8 font-medium relative items-center">
+                <a href="dashboard.html">
+                    <li class="hover:text-green-700 cursor-pointer">Home</li>
+                </a>
+                <a href="browserequest.html">
+                    <li class="hover:text-green-700 cursor-pointer">Browse Request</li>
+                </a>
+                <a href="sent-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">Sent Requests</li>
+                </a>
+                <a href="received-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">Received Requests</li>
+                </a>
+                <a href="accepted-request.html">
+                    <li class="hover:text-green-700 cursor-pointer">My Deals</li>
+                </a>
+                <li class="hover:text-verified cursor-pointer transition">
+                    <span class="material-symbols-outlined align-middle">notifications</span>
+                </li>
+
+                <button class="text-base text-ink/70 hover:text-verified transition" onclick="customMenu()">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <!-- Mylist  -->
+                <div id="customList"
+                    class="hidden bg-white shadow-xl rounded-2xl border border-ink/10 top-9 right-0 absolute w-44 overflow-hidden">
+                    <ul class="flex flex-col p-2 gap-1">
+                        <a href="profile.html">
+                            <li class="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-paper text-sm">
+                                <span class="material-symbols-outlined text-verified text-xl">account_circle</span>
+                                Profile
+                            </li>
+                        </a>
+                        <a href="../index.html">
+                            <li class="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-paper text-sm">
+                                <span id="logout" onclick="logoutFun()" class="material-symbols-outlined text-rust text-xl">logout</span>
+                                Sign Out
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </ul>
+
+            <!-- Burger Menu -->
+            <button class="md:hidden text-2xl text-ink" onclick="toggleMenu()" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-paper border-t border-ink/10">
+            <ul class="flex flex-col p-5 gap-4 text-ink/80 font-medium">
+                <a href="dashboard.html"><li>Home</li></a>
+                <a href="browserequest.html"><li>Browse Request</li></a>
+                <a href="sent-request.html"><li>Sent Requests</li></a>
+                <a href="received-request.html"><li>Received Requests</li></a>
+                <li><span class="material-symbols-outlined align-middle">notifications</span> Notifications</li>
+                <li>
+                    <span id="logout" onclick="logoutFun()" class="material-symbols-outlined align-middle text-rust">logout</span>
+                    Sign Out
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <button onclick="backPopup()" class=" top-3 left-4 text-l pl-5 pt-5">
+        <span class="material-symbols-outlined">
+            arrow_back
+        </span>
+    </button>
+
+    <!-- Personal detail  -->
+    <div class="px-5 max-w-5xl mx-auto">
+        <div class="p-3" id="personaldetails">
+
+        </div>
+    </div>
+
+    <!-- Post Request Popup cash-->
+    <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 hidden"
+        id="cashrequestPopup">
+        <div class="bg-white rounded-2xl shadow-2xl w-[900px] max-w-[95vw] p-6 m-3">
+            <h2 class="text-2xl font-bold text-center text-gray-900">
+                Post New Request
+            </h2>
+            <p class="text-center text-gray-500 mb-6 text-sm">
+                Fill in the details below to request financial support.
+            </p>
+            <!-- Request Type -->
+            <div>
+                <h3 class="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-3">
+                    Request Type
+                </h3>
+                <div
+                    class="flex items-center gap-3 border-2 rounded-xl p-4 cursor-pointer border-emerald-500 bg-emerald-50 w-full">
+                    <i class="fa-solid fa-credit-card text-emerald-600 text-lg"></i>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-gray-800">
+                            Credit card required
+                        </span>
+                        <p class="text-xs text-gray-500">Request cash assistance from the community.</p>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Common Request Fields -->
+            <div class="grid grid-cols-2 gap-4 mt-6 " id="common">
+                <input
+                    class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    id="amount" placeholder="Amount Required (₹)" type="number" />
+                <input
+                    class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    id="reason" placeholder="Purpose" type="text" />
+                <textarea
+                    class="border border-gray-200 rounded-lg p-3 col-span-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    id="description" placeholder="Explain why you need support..."></textarea>
+            </div>
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3 mt-8">
+                <button
+                    class="px-6 py-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium transition-colors"
+                    onclick="cashclosePopup()">
+                    Cancel
+                </button>
+                <button id="submit"
+                    class="px-6 py-3 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-medium transition-colors"
+                    onclick="submitRequest()">
+                    Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Post Request Popup card -->
+
+    <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 hidden"
+        id="cardrequestPopup">
+        <div class="bg-white rounded-2xl shadow-2xl w-[900px] max-w-[95vw] p-6 m-3">
+            <h2 class="text-2xl font-bold text-center text-gray-900">
+                Send a Request
+            </h2>
+            <p class="text-center text-gray-500 mb-6 text-sm">
+Send your cash requirement to this member.            </p>
+            <!-- Request Type -->
+            <div>
+                <h3 class="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-3">
+                    Request Type
+                </h3>
+                <div
+                    class="flex items-center gap-3 border-2 rounded-xl p-4 cursor-pointer border-emerald-500 bg-emerald-50 w-full">
+                    <i class="fa-solid fa-sack-dollar text-emerald-600 text-lg"></i>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-gray-800">
+                            Cash Required
+                        </span>
+                        <p class="text-xs text-gray-500"> Request support using your credit card.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Request Fields -->
+            <div class="grid grid-cols-2 gap-4 mt-6 " id="commoncard">
+                <input
+                    class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    id="amount" placeholder="Amount Required (₹)" type="number" />
+                <input
+                    class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    id="reason" placeholder="Purpose" type="text" />
+                <textarea
+                    class="border border-gray-200 rounded-lg p-3 col-span-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    id="description" placeholder="Explain why you need support..."></textarea>
+            </div>
+
+
+            <!-- Card Details -->
+            <div class="hidden mt-8" id="cardForm">
+                <h3 class="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-2">
+                    Credit Card Details
+                </h3>
+                <p class="text-sm text-gray-500 mb-5">
+                    Your card details will be securely stored and won't be requested again.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <input
+                        class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        id="bankName" placeholder="Bank Name" type="text" />
+                    <select
+                        class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        id="cardType">
+                        <option value="">
+                            Select Card Type
+                        </option>
+                        <option value="Visa">
+                            Visa
+                        </option>
+                        <option value="MasterCard">
+                            MasterCard
+                        </option>
+                        <option value="RuPay">
+                            RuPay
+                        </option>
+                        <option value="Amex">
+                            Amex
+                        </option>
+                    </select>
+                    <input
+                        class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        id="last4" maxlength="4" placeholder="Last 4 Digits" type="text" />
+                    <input
+                        class="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        id="creditLimit" placeholder="Available Credit Limit" type="number" />
+                </div>
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3 mt-8">
+                <button
+                    class="px-6 py-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium transition-colors"
+                    onclick="cardclosePopup()" id="cancelbtn">
+                    Cancel
+                </button>
+                <button id="next"
+                    class="px-6 py-3 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-medium transition-colors hidden"
+                    onclick="nextfun()">
+                    Next
+                </button>
+                <button id="cardsubmit"
+                    class="px-6 py-3 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-medium transition-colors"
+                    onclick="submitRequest()">
+                    Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        let id = localStorage.getItem("selectedUserId");
+        let currentUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+        let user = users.find(e => e.id == id);
+        console.log(user);
+        let cardUsers = users
+            .filter(user => user.role === "Card Holder")
+            .reverse();
+
+
+        // Cash holders
+        let cashUsers = users
+            .filter(user => user.role === "Cash Holder")
+            .reverse();
+
+        if (user.role === "Cash Holder") {
+            const personalDetails = document.getElementById("personaldetails")
+
+            personalDetails.innerHTML = `
+<div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
+
+    <!-- Top -->
+    <div class="flex justify-between items-center flex-wrap gap-6">
+
+        <div class="flex items-center gap-5">
+
+            <div class="w-20 h-20 rounded-full bg-emerald-600 text-white text-3xl font-bold flex justify-center items-center">
+                ${user.name.charAt(0).toUpperCase()}
+            </div>
+
+            <div>
+
+                <h2 class="text-2xl font-bold text-gray-900">
+                    ${user.name}
+                </h2>
+
+                <p class="text-gray-500 mt-1 flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                    ${user.city}, ${user.state}
+                </p>
+
+                <div class="flex gap-2 mt-3">
+
+                    <span class="bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">
+                        ${user.role}
+                    </span>
+
+                    <span class="bg-amber-50 text-amber-700 ring-1 ring-amber-200 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Verified Member
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Amount -->
+
+        <div class="text-right">
+
+            <p class="text-gray-400 uppercase tracking-wider text-xs font-medium">
+                Available Cash
+            </p>
+
+            <h1 class="text-4xl font-bold text-emerald-600 mt-1">
+                &#8377;${user.cashdetails.availableAmount}
+            </h1>
+
+            <p class="text-xs text-gray-500 mt-2 flex items-center justify-end gap-1">
+                <i class="fa-solid fa-hand-holding-heart text-emerald-500"></i>
+                Ready to support
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Divider -->
+
+    <div class="border-t border-gray-100 my-7"></div>
+
+
+    <!-- Cards -->
+
+    <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Left -->
+
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+            <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-wallet text-emerald-600"></i>
+                Cash Details
+            </h3>
+
+            <div class="space-y-3 text-sm">
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Available Cash</span>
+                    <span class="font-semibold text-emerald-700">
+                        &#8377;${user.cashdetails.availableAmount}
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Support Type</span>
+                    <span class="font-semibold text-gray-800">
+                        Cash Assistance
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Availability</span>
+                    <span class="text-emerald-600 font-semibold">
+                        Available
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Response Time</span>
+                    <span class="text-gray-800">
+                        Within 24 Hours
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right -->
+
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+            <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-chart-simple text-blue-600"></i>
+                Quick Overview
+            </h3>
+
+            <div class="space-y-3 text-sm">
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Role</span>
+                    <span class="font-semibold text-gray-800">
+                        Cash Holder
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Status</span>
+                    <span class="text-emerald-600 font-semibold">
+                        Available to Help
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Location</span>
+                    <span class="text-gray-800">
+                        ${user.city}
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Trust Score</span>
+                    <span class="text-amber-600 font-semibold">
+                        Excellent
+                    </span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Member Since</span>
+                    <span class="text-gray-800">
+                        2026
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Personal Info -->
+
+    <div class="mt-7">
+
+        <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-id-card text-gray-400"></i>
+            Personal Information
+        </h3>
+
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+            <div class="grid md:grid-cols-2 gap-5 text-sm">
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-envelope text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">Email</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.email}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-phone text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">Phone</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.number}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-map-pin text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">Address</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.address}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-map text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">State</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.state}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- About -->
+
+    <div class="mt-7">
+
+        <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-gray-400"></i>
+            About
+        </h3>
+
+        <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
+
+            <p class="leading-7 text-gray-700 text-sm">
+                Helping users through trusted financial support.
+                Available whenever genuine assistance is needed.
+                Committed to providing quick and reliable assistance
+                with transparency and trust.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <div class="mt-7 border-t border-gray-100 pt-6 flex justify-between items-center flex-wrap gap-4">
+
+        <div>
+
+            <p class="font-semibold text-gray-800 text-sm">
+                CashConnect Verified Member
+            </p>
+
+            <p class="text-xs text-gray-500 mt-0.5">
+                Building trust through secure financial connections.
+            </p>
+
+        </div>
+
+        <!-- btn -->
+
+        <div class="flex items-center gap-3">
+            <button onclick="acceptRequest()" class="border border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl hover:bg-gray-50 font-medium transition-colors flex items-center gap-2">
+                <i class="fa-regular fa-comment-dots"></i>
+                Message
+            </button>
+            <button onclick="cardpopUp()" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl hover:bg-emerald-700 font-medium transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                Request
+            </button>
+        </div>
+
+    </div>
+
+</div>
+`;
+
+        }
+        else {
+            const personalDetails = document.getElementById("personaldetails")
+
+            personalDetails.innerHTML = `
+<div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
+
+    <!-- Top -->
+    <div class="flex justify-between items-center flex-wrap gap-6">
+
+        <div class="flex items-center gap-5">
+
+            <div class="w-20 h-20 rounded-full bg-emerald-600 text-white text-3xl font-bold flex justify-center items-center">
+                ${user.name.charAt(0).toUpperCase()}
+            </div>
+
+            <div>
+
+                <h2 class="text-2xl font-bold text-gray-900">
+                    ${user.name}
+                </h2>
+
+                <p class="text-gray-500 mt-1 flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                    ${user.city}, ${user.state}
+                </p>
+
+                <div class="flex gap-2 mt-3">
+
+                    <span class="bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 px-3 py-1 rounded-full text-xs font-semibold">
+                        ${user.role}
+                    </span>
+
+                    <span class="bg-amber-50 text-amber-700 ring-1 ring-amber-200 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Verified Member
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Amount -->
+
+        <div class="text-right">
+
+            <p class="text-gray-400 uppercase tracking-wider text-xs font-medium">
+                Available Credit
+            </p>
+
+            <h1 class="text-4xl font-bold text-emerald-600 mt-1">
+                &#8377;${user.carddetails.creditLimit}
+            </h1>
+
+            <p class="text-xs text-gray-500 mt-2 flex items-center justify-end gap-1">
+                <i class="fa-solid fa-hand-holding-heart text-emerald-500"></i>
+                Ready to support
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Divider -->
+
+    <div class="border-t border-gray-100 my-7"></div>
+
+
+    <!-- Cards -->
+
+<div class="grid md:grid-cols-2 gap-5">
+
+    <!-- Left -->
+
+    <div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+        <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-credit-card text-emerald-600"></i>
+            Credit Details
+        </h3>
+
+        <div class="space-y-3 text-sm">
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Bank Name</span>
+                <span class="font-semibold text-gray-800">
+                    ${user.carddetails.bankName}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Card Type</span>
+                <span class="font-semibold text-gray-800">
+                    ${user.carddetails.cardType}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Credit Limit</span>
+                <span class="font-semibold text-emerald-700">
+                    &#8377;${user.carddetails.creditLimit}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Support Type</span>
+                <span class="font-semibold text-gray-800">
+                    Credit Card Assistance
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Right -->
+
+    <div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+        <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-chart-simple text-blue-600"></i>
+            Quick Overview
+        </h3>
+
+        <div class="space-y-3 text-sm">
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Role</span>
+                <span class="font-semibold text-gray-800">
+                    Card Holder
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Status</span>
+                <span class="text-emerald-600 font-semibold">
+                    Available to Help
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Location</span>
+                <span class="text-gray-800">
+                    ${user.city}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Member</span>
+                <span class="text-amber-600 font-semibold">
+                    Verified
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-gray-500">Card Status</span>
+                <span class="text-emerald-600 font-semibold">
+                    Active
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- Personal Info -->
+
+    <div class="mt-7">
+
+        <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-id-card text-gray-400"></i>
+            Personal Information
+        </h3>
+
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-5">
+
+            <div class="grid md:grid-cols-2 gap-5 text-sm">
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-envelope text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">Email</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.email}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-phone text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">Phone</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.number}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-map-pin text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">Address</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.address}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-map text-gray-400 mt-1"></i>
+                    <div>
+                        <p class="text-gray-400 text-xs">State</p>
+                        <p class="font-semibold text-gray-800 mt-0.5">
+                            ${user.state}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- About -->
+
+    <div class="mt-7">
+
+        <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-gray-400"></i>
+            About
+        </h3>
+
+        <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
+
+            <p class="leading-7 text-gray-700 text-sm">
+                Helping users through trusted financial support.
+                Available whenever genuine assistance is needed.
+                Committed to providing quick and reliable assistance
+                with transparency and trust.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <div class="mt-7 border-t border-gray-100 pt-6 flex justify-between items-center flex-wrap gap-4">
+
+        <div>
+
+            <p class="font-semibold text-gray-800 text-sm">
+                CashConnect Verified Member
+            </p>
+
+            <p class="text-xs text-gray-500 mt-0.5">
+                Building trust through secure financial connections.
+            </p>
+
+        </div>
+
+        <!-- btn -->
+
+        <div class="flex items-center gap-3">
+            <button onclick="acceptRequest()" class="border border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl hover:bg-gray-50 font-medium transition-colors flex items-center gap-2">
+                <i class="fa-regular fa-comment-dots"></i>
+                Message
+            </button>
+            <button onclick="cashpopUp()" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl hover:bg-emerald-700 font-medium transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                Request
+            </button>
+        </div>
+
+    </div>
+
+</div>
+`;
+
+
+        }
+
+
+        const backPopup = () => {
+            window.location.href = "dashboard.html"
+        }
+
+        const cashpopUp = () => {
+            document.getElementById("cashrequestPopup").classList.remove("hidden")
+        }
+        const cashclosePopup = () => {
+            document.getElementById("cashrequestPopup").classList.add("hidden")
+        }
+
+        function cardpopUp() {
+
+
+            document.getElementById("cardrequestPopup").classList.remove("hidden");
+
+            if (!currentUser.carddetails.bankName) {
+                document.getElementById("cardForm").classList.remove("hidden");
+                document.getElementById("commoncard").classList.add("hidden");
+                document.getElementById("next").classList.remove("hidden")
+                document.getElementById("cardsubmit").classList.add("hidden")
+
+
+            } else {
+                document.getElementById("cardForm").classList.add("hidden");
+                document.getElementById("commoncard").classList.remove("hidden");
+            }
+        }
+        const cardclosePopup = () => {
+            document.getElementById("cardrequestPopup").classList.add("hidden")
+        }
+
+        const nextfun = () => {
+            document.getElementById("cardForm").classList.add("hidden");
+            document.getElementById("commoncard").classList.remove("hidden");
+            document.getElementById("next").classList.add("hidden")
+            document.getElementById("cardsubmit").classList.remove("hidden")
+        }
+
+
+
+
+        function submitRequest() {
+
+
+            let amount, reason, description;
+
+            if (!document.getElementById("cashrequestPopup").classList.contains("hidden")) {
+
+                // Cash Popup Open
+                let popup = document.getElementById("cashrequestPopup");
+
+                amount = popup.querySelector("#amount").value;
+                reason = popup.querySelector("#reason").value;
+                description = popup.querySelector("#description").value;
+
+            } else {
+
+                // Card Popup Open
+                let popup = document.getElementById("cardrequestPopup");
+
+                amount = popup.querySelector("#amount").value;
+                reason = popup.querySelector("#reason").value;
+                description = popup.querySelector("#description").value;
+            }
+
+            if (amount.trim() == "" || reason.trim() == "" || description.trim() == "") {
+                alert("Fill all fields");
+                return;
+            }
+
+            if (user.role == "Cash Holder") {
+
+                if (!currentUser.carddetails) {
+
+                    let bank = document.getElementById("bankName").value;
+
+                    let type = document.getElementById("cardType").value;
+
+                    let last4 = document.getElementById("last4").value;
+
+                    let limit = document.getElementById("creditLimit").value;
+
+                    if (bank == "" || type == "" || last4 == "" || limit == "") {
+
+                        alert("Fill Card Details");
+
+                        return;
+
+                    }
+                    else {
+                        currentUser.carddetails = {
+                            bankName: bank,
+                            cardType: type,
+                            last4: last4,
+                            creditLimit: limit
+                        }
+                        localStorage.setItem("loggedInUser", JSON.stringify(currentUser));
+
+                        let index = users.findIndex(
+                            e => e.email === currentUser.email
+                        );
+
+                        users[index] = currentUser;
+
+                        localStorage.setItem(
+                            "users",
+                            JSON.stringify(users)
+                        );
+                    }
+                }
+
+            }
+            let requestDb = JSON.parse(localStorage.getItem("requests")) || [];
+            let request = ""
+            if (user.role == 'Cash Holder') {
+                request = {
+                    id: Date.now(),
+                    userEmail: currentUser.email,
+                    userName: currentUser.name,
+                    requestType: "Cash",
+                    requestMode: "direct",
+                    amount: amount,
+                    reason: reason,
+                    description: description,
+                    status: "Pending",
+                    createdAt: new Date().toLocaleString(),
+                    address: currentUser.address,
+                    number: currentUser.number,
+
+                    senderId: currentUser.id,
+                    receiverId: user.id,
+
+                    senderName: currentUser.name,
+                    receiverName: user.name,
+                    receiverName: user.name,
+receiverCity: user.address?.city || user.city || "Location not available",
+                };
+            } else {
+                request = {
+                    id: Date.now(),
+                    userEmail: currentUser.email,
+                    userName: currentUser.name,
+                    requestType: "Card",
+                    requestMode: "direct",
+                    amount: amount,
+                    reason: reason,
+                    description: description,
+                    status: "Pending",
+                    createdAt: new Date().toLocaleString(),
+                    address: currentUser.address,
+                    number: currentUser.number,
+
+                    senderId: currentUser.id,
+                    receiverId: user.id,
+
+                    senderName: currentUser.name,
+                    receiverName: user.name,
+                    receiverName: user.name,
+receiverCity: user.address?.city || user.city || "Location not available",
+                };
+            }
+
+            if (user.role == "Cash Holder") {
+                request.carddetails = currentUser.carddetails;
+            }
+
+            requestDb.push(request);
+
+            localStorage.setItem("requests", JSON.stringify(requestDb));
+            document.getElementById("cardrequestPopup").classList.add("hidden");
+            document.getElementById("cashrequestPopup").classList.add("hidden");
+            clearForm();
+            alert("Request Submitted");
+            loadRecentRequests();
+        }
+
+
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("hidden");
+        }
+
+        const customMenu = () => {
+            document.getElementById("customList").classList.toggle("hidden");
+        }
+
+    function clearForm() {
+
+    document.querySelectorAll("#cashrequestPopup input").forEach(e => e.value = "");
+    document.querySelectorAll("#cashrequestPopup textarea").forEach(e => e.value = "");
+
+    document.querySelectorAll("#cardrequestPopup input").forEach(e => e.value = "");
+    document.querySelectorAll("#cardrequestPopup textarea").forEach(e => e.value = "");
+
+    document.querySelectorAll("#cardrequestPopup select").forEach(e => e.selectedIndex = 0);
+
+}
+
+
+    </script>
+</body>
+
+</html>

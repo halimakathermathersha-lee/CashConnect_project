@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashConnect | My Profile</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Top bar -->
+   <!-- Top Navigation -->
+<div class="max-w-6xl mx-auto px-5 pt-6">
+
+    <div class="flex items-center justify-between">
+
+        <!-- Back -->
+        <button onclick="backPopup()"
+            class="group inline-flex items-center gap-2.5
+                   bg-white border border-gray-200
+                   px-4 py-2.5 rounded-xl
+                   shadow-sm hover:shadow-md
+                   hover:border-emerald-200
+                   transition-all duration-300">
+
+            <span class="w-7 h-7 rounded-lg bg-gray-100
+                         group-hover:bg-emerald-50
+                         flex items-center justify-center
+                         transition-colors">
+
+                <span class="material-symbols-outlined text-[18px]
+                             text-gray-500 group-hover:text-emerald-600">
+                    arrow_back
+                </span>
+
+            </span>
+
+            <span class="text-sm font-semibold text-gray-700
+                         group-hover:text-emerald-700">
+                Dashboard
+            </span>
+
+        </button>
+
+
+        <!-- Page indicator -->
+        <div class="hidden sm:flex items-center gap-2 text-sm">
+
+            <span class="text-gray-400">
+                Dashboard
+            </span>
+
+            <span class="material-symbols-outlined text-gray-300 text-base">
+                chevron_right
+            </span>
+
+            <span class="font-semibold text-gray-800">
+                My Profile
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <div class="max-w-6xl mx-auto px-5 pb-16">
+
+        <!-- ================= PROFILE HEADER ================= -->
+
+<div class="mt-6 relative overflow-hidden
+            bg-gradient-to-br from-[#071c18] via-[#0b3027] to-[#0b4635]
+            rounded-3xl shadow-lg">
+
+    <!-- Decorative glow -->
+    <div class="absolute -top-20 -right-16
+                w-64 h-64 bg-emerald-400/10
+                rounded-full blur-3xl">
+    </div>
+
+    <div class="absolute -bottom-24 left-1/3
+                w-52 h-52 bg-green-300/10
+                rounded-full blur-3xl">
+    </div>
+
+
+    <div class="relative px-6 sm:px-8 py-7">
+
+        <div class="flex flex-col sm:flex-row
+                    sm:items-center sm:justify-between gap-6">
+
+
+            <!-- USER -->
+
+            <div class="flex items-center gap-4">
+
+                <!-- Avatar -->
+                <div id="avatar"
+                    class="w-16 h-16 rounded-2xl
+                           bg-white/10 border border-white/15
+                           p-1 shrink-0 shadow-lg">
+
+                    <div class="w-full h-full rounded-xl
+                                bg-emerald-500
+                                text-white text-xl font-bold
+                                flex items-center justify-center">
+                        U
+                    </div>
+
+                </div>
+
+
+                <!-- Name -->
+                <div>
+
+                    <div class="flex items-center gap-2">
+
+                        <h1 id="displayName"
+                            class="text-xl sm:text-2xl
+                                   font-bold text-white">
+                            —
+                        </h1>
+
+                        <span class="material-symbols-outlined
+                                     text-emerald-300 text-lg">
+                            verified
+                        </span>
+
+                    </div>
+
+
+                    <p id="displayEmail"
+                        class="text-emerald-100/60 text-sm mt-1">
+                        —
+                    </p>
+
+
+                    <div class="flex items-center gap-2 mt-3">
+
+                        <span id="headerRole"
+                            class="inline-flex items-center
+                                   bg-white/10 border border-white/10
+                                   text-emerald-100
+                                   px-3 py-1 rounded-full
+                                   text-[11px] font-semibold">
+                            Member
+                        </span>
+
+                        <span class="inline-flex items-center gap-1.5
+                                     text-[11px] text-emerald-200">
+
+                            <span class="w-1.5 h-1.5
+                                         rounded-full bg-emerald-400">
+                            </span>
+
+                            Active
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="sm:text-right">
+
+                <p class="text-[11px] uppercase tracking-[2px]
+                          text-emerald-200/50">
+                    CashConnect Account
+                </p>
+
+                <p class="text-white font-semibold mt-1">
+                    Verified Member
+                </p>
+
+                <div class="flex sm:justify-end
+                            items-center gap-1.5 mt-2
+                            text-xs text-emerald-200/60">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Secure account
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- Personal information -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 mt-6">
+
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-bold text-gray-900">Personal Information</h2>
+                <span class="text-xs text-gray-400">Name and email are locked to your account</span>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+
+                <div>
+                    <label class="text-xs font-medium text-gray-500 mb-1.5 block">Full Name</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">person</span>
+                        <input id="name" disabled
+                            class="w-full border border-gray-200 rounded-xl pl-10 pr-3 py-2.5 bg-gray-50 text-gray-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs font-medium text-gray-500 mb-1.5 block">Email Address</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">mail</span>
+                        <input id="email" disabled
+                            class="w-full border border-gray-200 rounded-xl pl-10 pr-3 py-2.5 bg-gray-50 text-gray-600">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="text-xs font-medium text-gray-500 mb-1.5 block">Phone Number</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">call</span>
+                        <input id="phone" placeholder="Enter your phone number"
+                            class="w-full border border-gray-200 rounded-xl pl-10 pr-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    </div>
+                </div>
+                <!-- City -->
+<div>
+    <label class="text-xs font-medium text-gray-500 mb-1.5 block">
+        City
+    </label>
+
+    <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
+            location_city
+        </span>
+
+        <input id="city" disabled
+            class="w-full border border-gray-200 rounded-xl pl-10 pr-3 py-2.5 bg-gray-50 text-gray-600">
+    </div>
+</div>
+
+
+<!-- State -->
+<div>
+    <label class="text-xs font-medium text-gray-500 mb-1.5 block">
+        State
+    </label>
+
+    <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
+            map
+        </span>
+
+        <input id="state" disabled
+            class="w-full border border-gray-200 rounded-xl pl-10 pr-3 py-2.5 bg-gray-50 text-gray-600">
+    </div>
+</div>
+
+
+<!-- Full Address -->
+<div class="sm:col-span-2">
+
+    <label class="text-xs font-medium text-gray-500 mb-1.5 block">
+        Registered Address
+    </label>
+
+    <div class="relative">
+
+        <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400 text-lg">
+            location_on
+        </span>
+
+        <textarea id="fullAddress"
+            disabled
+            rows="2"
+            class="w-full border border-gray-200 rounded-xl pl-10 pr-3 py-3 bg-gray-50 text-gray-600 resize-none">
+        </textarea>
+
+    </div>
+
+</div>
+
+            </div>
+        </div>
+
+       <!-- ================= ACCOUNT DETAILS ================= -->
+
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 mt-6">
+
+    <div class="flex items-center justify-between mb-7">
+
+        <div>
+            <h2 class="text-lg font-bold text-gray-900">
+                Account Details
+            </h2>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Your registered CashConnect account information
+            </p>
+        </div>
+
+        <span id="roleBadge"
+            class="bg-emerald-50 text-emerald-700 px-3 py-1.5
+                   rounded-full text-xs font-semibold">
+        </span>
+
+    </div>
+
+
+    <!-- ================= CARD HOLDER ================= -->
+
+    <div id="cardHolderSection" class="hidden">
+
+        <div class="grid lg:grid-cols-2 gap-8">
+
+            <!-- DETAILS -->
+
+            <div>
+
+                <div class="flex items-center gap-3 mb-6">
+
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50
+                                flex items-center justify-center">
+
+                        <i class="fa-regular fa-credit-card text-emerald-600"></i>
+
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold text-gray-900">
+                            Credit Card Information
+                        </h3>
+
+                        <p class="text-xs text-gray-500">
+                            Your registered card details
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-4">
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-400">Bank Name</p>
+                        <p id="profileBank"
+                            class="font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-400">Card Type</p>
+                        <p id="profileCardType"
+                            class="font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-400">Card Number</p>
+                        <p id="profileLast4"
+                            class="font-mono font-semibold text-gray-800 mt-1">
+                        </p>
+                    </div>
+
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-400">
+                            Available Credit
+                        </p>
+
+                        <p id="profileLimit"
+                            class="font-bold text-emerald-700 mt-1">
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD PREVIEW -->
+
+            <div class="bg-gradient-to-br from-gray-950 via-gray-900 to-emerald-950
+                        rounded-2xl p-6 text-white shadow-lg min-h-[230px]
+                        flex flex-col justify-between">
+
+                <div class="flex justify-between items-start">
+
+                    <div>
+                        <p class="text-gray-400 text-xs uppercase tracking-wider">
+                            CashConnect Card
+                        </p>
+
+                        <h3 id="previewBank"
+                            class="font-semibold text-lg mt-1">
+                        </h3>
+                    </div>
+
+                    <div class="w-11 h-11 bg-white/10 rounded-xl
+                                flex items-center justify-center">
+
+                        <i class="fa-regular fa-credit-card text-xl"></i>
+
+                    </div>
+
+                </div>
+
+
+                <p id="previewNumber"
+                    class="text-xl tracking-[4px] font-mono">
+                </p>
+
+
+                <div class="flex justify-between">
+
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase">
+                            Card Holder
+                        </p>
+
+                        <p id="previewHolder"
+                            class="font-medium mt-1">
+                        </p>
+                    </div>
+
+
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-400 uppercase">
+                            Available Credit
+                        </p>
+
+                        <p id="previewLimit"
+                            class="font-semibold text-emerald-300 mt-1">
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CASH HOLDER ================= -->
+
+    <div id="cashHolderSection" class="hidden">
+
+        <div class="grid lg:grid-cols-2 gap-6">
+
+            <!-- CASH INFO -->
+
+            <div class="border border-gray-100 rounded-2xl p-6">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50
+                                flex items-center justify-center">
+
+                        <i class="fa-solid fa-wallet text-emerald-600"></i>
+
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-500">
+                            Available Cash
+                        </p>
+
+                        <h2 id="profileCashAmount"
+                            class="text-2xl font-bold text-gray-900 mt-0.5">
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="border-t border-gray-100 mt-6 pt-5">
+
+                    <div class="flex justify-between items-center">
+
+                        <span class="text-sm text-gray-500">
+                            Account Status
+                        </span>
+
+                        <span class="flex items-center gap-2
+                                     text-sm font-semibold text-emerald-700">
+
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+
+                            Available
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="bg-emerald-50/60 border border-emerald-100
+                        rounded-2xl p-6">
+
+                <p class="text-xs font-semibold text-emerald-700 uppercase
+                          tracking-wider">
+                    Cash Holder Account
+                </p>
+
+                <h3 class="text-lg font-bold text-gray-900 mt-3">
+                    Ready for exchanges
+                </h3>
+
+                <p class="text-sm text-gray-600 mt-2 leading-6">
+                    Your available amount is used when accepting
+                    eligible direct exchange requests.
+                </p>
+
+                <div class="mt-5 flex items-center gap-2 text-sm
+                            font-medium text-emerald-700">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Verified CashConnect Member
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= ACTIVITY SUMMARY ================= -->
+
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 mt-6">
+
+    <div class="mb-6">
+
+        <h2 class="text-lg font-bold text-gray-900">
+            Activity Overview
+        </h2>
+
+        <p class="text-sm text-gray-500 mt-1">
+            A quick summary of your CashConnect activity
+        </p>
+
+    </div>
+
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <!-- SENT -->
+        <div class="border border-gray-100 rounded-2xl p-5">
+
+            <div class="w-10 h-10 rounded-xl bg-gray-100
+                        flex items-center justify-center mb-4">
+
+                <i class="fa-solid fa-paper-plane text-gray-600"></i>
+
+            </div>
+
+            <h3 id="totalSent"
+                class="text-2xl font-bold text-gray-900">
+                0
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Requests Sent
+            </p>
+
+        </div>
+
+
+        <!-- PENDING -->
+        <div class="border border-amber-100 bg-amber-50/40 rounded-2xl p-5">
+
+            <div class="w-10 h-10 rounded-xl bg-amber-100
+                        flex items-center justify-center mb-4">
+
+                <i class="fa-regular fa-clock text-amber-600"></i>
+
+            </div>
+
+            <h3 id="totalPending"
+                class="text-2xl font-bold text-gray-900">
+                0
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Pending
+            </p>
+
+        </div>
+
+
+        <!-- ACCEPTED -->
+        <div class="border border-emerald-100 bg-emerald-50/40 rounded-2xl p-5">
+
+            <div class="w-10 h-10 rounded-xl bg-emerald-100
+                        flex items-center justify-center mb-4">
+
+                <i class="fa-solid fa-handshake text-emerald-600"></i>
+
+            </div>
+
+            <h3 id="totalAccepted"
+                class="text-2xl font-bold text-gray-900">
+                0
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Accepted
+            </p>
+
+        </div>
+
+
+        <!-- COMPLETED -->
+        <div class="border border-blue-100 bg-blue-50/40 rounded-2xl p-5">
+
+            <div class="w-10 h-10 rounded-xl bg-blue-100
+                        flex items-center justify-center mb-4">
+
+                <i class="fa-solid fa-circle-check text-blue-600"></i>
+
+            </div>
+
+            <h3 id="totalCompleted"
+                class="text-2xl font-bold text-gray-900">
+                0
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Completed
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- Save -->
+        <div class="mt-10">
+            <button onclick="saveProfile()"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 py-3.5 rounded-xl w-full transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">save</span>
+                Save Profile
+            </button>
+        </div>
+
+    </div>
+
+   <script>
+
+    // ================= GET CURRENT USER =================
+
+    let currentUser =
+        JSON.parse(localStorage.getItem("loggedInUser")) || {};
+
+    console.log("Profile User :", currentUser);
+
+
+    // ================= PERSONAL DETAILS =================
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phone");
+
+    nameInput.value =
+        currentUser.name || "";
+
+    emailInput.value =
+        currentUser.email || "";
+
+    phoneInput.value =
+        currentUser.number || "";
+
+
+    // Header
+    document.getElementById("displayName").innerText =
+        currentUser.name || "Your Name";
+
+    document.getElementById("displayEmail").innerText =
+        currentUser.email || "Email not available";
+
+    document.querySelector("#avatar div").innerText =
+        (currentUser.name || "U")
+            .charAt(0)
+            .toUpperCase();
+
+// ================= ADDRESS =================
+
+let address = currentUser.address || {};
+
+let city = "";
+let state = "";
+let fullAddress = "";
+
+
+// address object-aa irundha
+if (typeof address === "object") {
+
+    city = address.city || "";
+    state = address.state || "";
+
+    fullAddress = [
+        address.house,
+        address.street,
+        address.city,
+        address.district,
+        address.state,
+        address.pincode
+    ]
+    .filter(Boolean)
+    .join(", ");
+
+}
+
+// old data string-aa irundha
+else {
+
+    fullAddress = address;
+
+}
+
+
+document.getElementById("city").value =
+    city || "Not available";
+
+document.getElementById("state").value =
+    state || "Not available";
+
+document.getElementById("fullAddress").value =
+    fullAddress || "Address not available";
+    // ================= ACTIVITY SUMMARY =================
+
+let requestDb =
+    JSON.parse(localStorage.getItem("requests")) || [];
+
+
+// Naan send panna requests
+let myRequests = requestDb.filter(request =>
+
+    String(request.senderId) === String(currentUser.id) ||
+
+    request.userEmail === currentUser.email
+
+);
+
+
+let pendingRequests = myRequests.filter(
+    request => request.status === "Pending"
+);
+
+let acceptedRequests = myRequests.filter(
+    request => request.status === "Accepted"
+);
+
+let completedRequests = myRequests.filter(
+    request => request.status === "Completed"
+);
+
+
+document.getElementById("totalSent").innerText =
+    myRequests.length;
+
+document.getElementById("totalPending").innerText =
+    pendingRequests.length;
+
+document.getElementById("totalAccepted").innerText =
+    acceptedRequests.length;
+
+document.getElementById("totalCompleted").innerText =
+    completedRequests.length;
+    // ================= ROLE =================
+
+    document.getElementById("roleBadge").innerText =
+        currentUser.role || "Member";
+
+
+    // ================= CARD HOLDER =================
+
+    if (currentUser.role === "Card Holder") {
+
+        document
+            .getElementById("cardHolderSection")
+            .classList.remove("hidden");
+
+
+        let card =
+            currentUser.carddetails ||
+            currentUser.cardDetails ||
+            {};
+
+
+        // Normal details
+        document.getElementById("profileBank").innerText =
+            card.bankName || "Not available";
+
+        document.getElementById("profileCardType").innerText =
+            card.cardType || "Not available";
+
+        document.getElementById("profileLast4").innerText =
+            card.last4
+                ? "•••• " + card.last4
+                : "Not available";
+
+        document.getElementById("profileLimit").innerText =
+            "₹" +
+            Number(card.creditLimit || 0)
+                .toLocaleString("en-IN");
+
+
+        // Card preview
+        document.getElementById("previewBank").innerText =
+            card.bankName || "CashConnect";
+
+        document.getElementById("previewNumber").innerText =
+            "•••• •••• •••• " +
+            (card.last4 || "----");
+
+        document.getElementById("previewHolder").innerText =
+            currentUser.name || "Card Holder";
+
+        document.getElementById("previewLimit").innerText =
+            "₹" +
+            Number(card.creditLimit || 0)
+                .toLocaleString("en-IN");
+
+    }
+
+
+    // ================= CASH HOLDER =================
+
+    else if (currentUser.role === "Cash Holder") {
+
+        document
+            .getElementById("cashHolderSection")
+            .classList.remove("hidden");
+
+
+        let cash =
+            currentUser.cashdetails ||
+            currentUser.cashDetails ||
+            {};
+
+
+        document.getElementById("profileCashAmount").innerText =
+            "₹" +
+            Number(cash.availableAmount || 0)
+                .toLocaleString("en-IN");
+
+    }
+
+
+    // ================= TOAST =================
+
+    function showToast(message, isError = false) {
+
+        Toastify({
+
+            text: message,
+            duration: 2500,
+            gravity: "top",
+            position: "right",
+
+            style: {
+                background:
+                    isError
+                        ? "#dc2626"
+                        : "#059669",
+
+                borderRadius: "10px"
+            }
+
+        }).showToast();
+
+    }
+
+
+    // ================= SAVE PROFILE =================
+
+    function saveProfile() {
+
+        currentUser.number =
+            phoneInput.value.trim();
+
+
+        // Update loggedInUser
+        localStorage.setItem(
+            "loggedInUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        // Update users DB
+        let userDb =
+            JSON.parse(localStorage.getItem("users")) || [];
+
+
+        let index =
+            userDb.findIndex(
+                user =>
+                    String(user.id) ===
+                    String(currentUser.id)
+            );
+
+
+        if (index !== -1) {
+
+            userDb[index] = currentUser;
+
+            localStorage.setItem(
+                "users",
+                JSON.stringify(userDb)
+            );
+
+        }
+
+
+        showToast(
+            "Profile updated successfully"
+        );
+
+    }
+
+
+    // ================= BACK =================
+
+    const backPopup = () => {
+
+        window.location.href =
+            "dashboard.html";
+
+    };
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashConnect — Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+    <button onclick="backPopup()"
+        class="fixed top-4 left-4 z-20 flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-full px-3 py-1.5 shadow-sm transition">
+        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+        Back
+    </button>
+
+    <div id="register" class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+        <div class="w-full max-w-5xl bg-white rounded-2xl shadow-xl border border-gray-100 p-7 sm:p-10">
+
+            <div class="mb-6">
+                <span class="font-mono text-xs tracking-widest text-gray-400">ACCOUNT SETUP</span>
+                <h2 class="font-bold text-2xl mt-1 text-gray-900">Create your account</h2>
+            </div>
+
+            <!-- Entry 01 -->
+            <div class="flex items-center gap-2 mb-3">
+                <span class="font-mono text-xs tracking-widest text-emerald-700">ENTRY 01</span>
+                <h3 class="text-sm font-semibold text-gray-700">Personal details</h3>
+                <div class="h-px flex-1 bg-gray-100"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-8" id="inputDetails">
+                <input id="rname" type="text" placeholder="Full name"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                <input id="remail" type="email" placeholder="Email address"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                <input id="rnumber" type="tel" placeholder="Mobile number"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                <input id="rpassword" type="password" placeholder="Password (8+ characters)"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+            </div>
+
+            <!-- Entry 02 -->
+            <div class="flex items-center gap-2 mb-3">
+                <span class="font-mono text-xs tracking-widest text-emerald-700">ENTRY 02</span>
+                <h3 class="text-sm font-semibold text-gray-700">Address</h3>
+                <div class="h-px flex-1 bg-gray-100"></div>
+            </div>
+
+            <div class="grid gap-4 mb-8">
+                <textarea id="address" placeholder="Street address"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition h-20 resize-none"></textarea>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <input id="city" placeholder="City"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                    <input id="state" placeholder="State"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                </div>
+            </div>
+
+            <!-- Entry 03 -->
+            <div class="flex items-center gap-2 mb-3">
+                <span class="font-mono text-xs tracking-widest text-emerald-700">ENTRY 03</span>
+                <h3 class="text-sm font-semibold text-gray-700">Your role</h3>
+                <div class="h-px flex-1 bg-gray-100"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-2">
+                <label onclick="showCardFields()"
+                    class="group relative border-2 border-gray-200 rounded-xl p-4 cursor-pointer has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50 transition">
+                    <input type="radio" name="role" value="Card Holder" id="cardHolder" class="sr-only">
+                    <h3 class="font-semibold text-sm text-gray-900">Card holder</h3>
+                    <p class="text-xs text-gray-500 mt-1">I own a credit card.</p>
+                </label>
+
+                <label onclick="showCashFields()"
+                    class="group relative border-2 border-gray-200 rounded-xl p-4 cursor-pointer has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50 transition">
+                    <input type="radio" name="role" value="Cash Holder" id="cashHolder" class="sr-only">
+                    <h3 class="font-semibold text-sm text-gray-900">Cash holder</h3>
+                    <p class="text-xs text-gray-500 mt-1">I can provide cash support.</p>
+                </label>
+            </div>
+
+            <div id="cardSection" class="hidden mt-5 bg-gray-50 border border-gray-100 rounded-xl p-5">
+                <p class="font-mono text-xs tracking-widest text-gray-400 mb-3">CARD DETAILS</p>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <input id="bankName" placeholder="Bank name"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                    <select id="cardType"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm font-mono outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                        <option value="">Select card</option>
+                        <option>Visa</option>
+                        <option>MasterCard</option>
+                        <option>RuPay</option>
+                    </select>
+                    <input id="last4" maxlength="4" placeholder="Last 4 digits"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm font-mono tracking-wide outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                    <input id="creditLimit" type="number" placeholder="Credit limit"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm font-mono tracking-wide outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+                </div>
+            </div>
+
+            <div id="cashSection" class="hidden mt-5 bg-gray-50 border border-gray-100 rounded-xl p-5">
+                <p class="font-mono text-xs tracking-widest text-gray-400 mb-3">CASH DETAILS</p>
+                <input id="availableAmount" type="number" placeholder="Available amount"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm font-mono tracking-wide outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition">
+            </div>
+
+            <div class="mt-7 flex items-start gap-2.5">
+                <input type="checkbox" id="check" class="mt-0.5 accent-emerald-600">
+                <p class="text-gray-500 text-sm">I agree to the Terms & Conditions.</p>
+            </div>
+
+            <button onclick="registerPage()"
+                class="w-full mt-6 py-3.5 rounded-xl bg-emerald-700 text-white font-semibold text-[15px] tracking-wide hover:bg-emerald-800 active:scale-[0.99] transition duration-150 shadow-md">
+                Create account
+            </button>
+
+            <p class="text-center text-gray-500 text-sm mt-4">
+                Already have an account? <a href="login.html" class="text-emerald-700 font-medium hover:underline">Log in</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Alert -->
+    <div id="alertBox" class="hidden fixed inset-0 bg-gray-900/50 flex items-center justify-center z-40 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-7 w-80 text-center">
+            
+            <h2 class="text-lg font-semibold text-gray-900">Incomplete entry</h2>
+            <p class="mt-1.5 text-gray-500 text-sm">Please fill all fields.</p>
+            <button onclick="closeAlert()"
+                class="mt-5 w-full bg-emerald-700 text-white font-medium py-2.5 rounded-lg hover:bg-emerald-800 transition">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" class="hidden fixed inset-0 bg-gray-900/90 flex items-center justify-center z-50">
+        <div class="text-center px-6">
+            <div class="mx-auto w-16 h-16 border-[3px] border-white/15 border-t-amber-400 rounded-full animate-spin"></div>
+            <h2 class="text-2xl font-bold text-white mt-7">Verifying account</h2>
+            <p class="text-white/60 mt-1">Welcome, <span id="loaderName" class="text-white font-medium"></span></p>
+            <p id="status" class="font-mono text-xs tracking-widest text-amber-400 mt-3"></p>
+        </div>
+    </div>
+
+    <script>
+
+        function registerPage() {
+
+            let name = document.getElementById("rname").value.trim();
+            let email = document.getElementById("remail").value;
+            let number = document.getElementById("rnumber").value;
+            let password = document.getElementById("rpassword").value
+            let role = document.querySelector('input[name="role"]:checked');
+            let check = document.getElementById("check")
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let address = document.getElementById("address").value
+            let city = document.getElementById("city").value
+            let state = document.getElementById("state").value
+            let alertBox = document.getElementById("alertBox")
+            let pTag = alertBox.querySelector("p")
+            let messages = [
+                "Preparing your dashboard...",
+                "Loading your profile...",
+                "Connecting securely...",
+                "Almost there..."
+            ]
+            if (name == "" || email == "" || number == "" || password == "" || address == "" || city == "" || state == "") {
+                showAlert();
+                return
+            }
+            else if (!emailPattern.test(email) || !email.includes("@") || !email.endsWith(".com")) {
+                Toastify({
+                    text: "Please enter a valid email",
+                    duration: 1800,
+                    gravity: "bottom",
+                    position: "center",
+                    backgroundColor: "#C9A227"
+                }).showToast();
+            }
+
+            else if (number.length != 10) {
+                Toastify({
+                    text: "Enter a valid 10 digit mobile number",
+                    duration: 1800,
+                    gravity: "bottom",
+                    position: "center",
+                    backgroundColor: "#C9A227"
+                }).showToast();
+            }
+            else if (password.length <= 8) {
+                Toastify({
+                    text: "Password must be at least 8 characters long",
+                    duration: 1800,
+                    gravity: "bottom",
+                    position: "center",
+                    backgroundColor: "#C9A227"
+                }).showToast();
+            }
+
+            else if (!check.checked) {
+                Toastify({
+                    text: "Please agree to the Terms & Conditions",
+                    duration: 1800,
+                    gravity: "bottom",
+                    position: "center",
+                    backgroundColor: "#C9A227"
+                }).showToast();
+            } else if (!role) {
+
+                Toastify({
+                    text: "Select your role",
+                    duration: 1800,
+                    gravity: "bottom",
+                    position: "center",
+                    backgroundColor: "#C9A227"
+                }).showToast();
+
+                return;
+
+            }
+
+            else {
+                let bankName = document.getElementById("bankName").value;
+                let cardType = document.getElementById("cardType").value;
+                let last4 = document.getElementById("last4").value;
+                let creditLimit = document.getElementById("creditLimit").value;
+
+                let availableAmount = document.getElementById("availableAmount").value;
+
+                let userDb = JSON.parse(localStorage.getItem("users")) || [];
+
+                if (userDb.find(e => e.email === email)) {
+
+                    alertBox.classList.remove("hidden");
+                    pTag.innerText = "Already registered";
+
+                }
+                else {
+
+                    let newUser = {
+                        id: Date.now(),
+                        name,
+                        email,
+                        password,
+                        number,
+                        address,
+                        city,
+                        state,
+                        role: role.value,
+                        carddetails: {},
+                        cashdetails: {}
+                    };
+
+                    if (role.value == "Card Holder") {
+
+                        newUser.carddetails = {
+                            bankName,
+                            cardType,
+                            last4,
+                            creditLimit
+                        };
+
+                    }
+
+                    if (role.value == "Cash Holder") {
+
+                        newUser.cashdetails = {
+                            availableAmount
+                        };
+
+                    }
+
+                    userDb.push(newUser);
+
+                    localStorage.setItem("users", JSON.stringify(userDb));
+                    localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+
+                    document.getElementById("loader").classList.remove("hidden");
+                    document.getElementById("loaderName").innerText = name;
+
+                    let i = 0;
+
+                    let interval = setInterval(() => {
+
+                        document.getElementById("status").innerText =
+                            messages[i % messages.length];
+
+                        i++;
+
+                    }, 700);
+
+                    setTimeout(() => {
+
+                        clearInterval(interval);
+
+                        window.location.href = "dashboard.html";
+
+                    }, 3000);
+
+                }
+
+            }
+        }
+
+        const backPopup = () => {
+            window.history.back();
+        }
+
+
+        function showAlert() {
+            alertBox.classList.remove("hidden")
+        }
+
+        function closeAlert() {
+            alertBox.classList.add("hidden");
+
+        }
+
+        function showCardFields() {
+
+            document
+                .getElementById("cardSection")
+                .classList.remove("hidden");
+
+            document
+                .getElementById("cashSection")
+                .classList.add("hidden");
+
+        }
+
+        function showCashFields() {
+
+            document
+                .getElementById("cashSection")
+                .classList.remove("hidden");
+
+            document
+                .getElementById("cardSection")
+                .classList.add("hidden");
+
+        }
+
+    </script>
+</body>
+
+</html>
