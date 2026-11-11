@@ -105,18 +105,47 @@
         }
     ];
 
-    const existingUsers = JSON.parse(localStorage.getItem("users") || "null");
-    if (!Array.isArray(existingUsers) || existingUsers.length === 0) {
-        localStorage.setItem("users", JSON.stringify(demoUsers));
-    }
-    const existingRequests = JSON.parse(localStorage.getItem("requests") || "null");
-    if (!Array.isArray(existingRequests) || existingRequests.length === 0) {
-        localStorage.setItem("requests", JSON.stringify(demoRequests));
-    }
-    // Keep the demo account available as the initial signed-in profile on a fresh browser.
+       // Merge demo users without deleting existing users
+    const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
+    const safeUsers = Array.isArray(existingUsers) ? existingUsers : [];
+
+    const mergedUsers = [...safeUsers];
+
+    demoUsers.forEach(demoUser => {
+        if (!mergedUsers.some(user => user.email === demoUser.email)) {
+            mergedUsers.push(demoUser);
+        }
+    });
+
+    localStorage.setItem("users", JSON.stringify(mergedUsers));
+
+
+    // Merge demo requests without duplicates
+    const existingRequests = JSON.parse(localStorage.getItem("requests") || "[]");
+    const safeRequests = Array.isArray(existingRequests) ? existingRequests : [];
+
+    const mergedRequests = [...safeRequests];
+
+    demoRequests.forEach(demoRequest => {
+        if (!mergedRequests.some(request =>
+            String(request.id) === String(demoRequest.id)
+        )) {
+            mergedRequests.push(demoRequest);
+        }
+    });
+
+    localStorage.setItem("requests", JSON.stringify(mergedRequests));
+
+
+    // Set default demo account
     if (!localStorage.getItem("loggedInUser")) {
-        const users = JSON.parse(localStorage.getItem("users") || "[]");
-        const demoAccount = users.find(user => user.email === "demo@cashconnect.com");
-        if (demoAccount) localStorage.setItem("loggedInUser", JSON.stringify(demoAccount));
+        const demoAccount = mergedUsers.find(
+            user => user.email === "demo@cashconnect.com"
+        );
+
+        if (demoAccount) {
+            localStorage.setItem("loggedInUser", JSON.stringify(demoAccount));
+        }
     }
+
 })();
